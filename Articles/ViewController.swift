@@ -12,9 +12,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.navigationItem.title = "New Youk Times"
+        let imageSearch = UIImage.init(named: "ic_search")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: imageSearch, style: .plain, target: self, action:#selector(clickRightNavigation))
     }
-
-
+    
+    @objc func clickRightNavigation() {
+        
+    }
 }
 

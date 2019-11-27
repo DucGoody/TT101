@@ -23,6 +23,7 @@
 		0453FD59238E2A49008DAA08 /* MultimediaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD58238E2A49008DAA08 /* MultimediaEntity.swift */; };
 		0453FD5D238E2F49008DAA08 /* ArticlesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD5B238E2F49008DAA08 /* ArticlesCell.swift */; };
 		0453FD5E238E2F49008DAA08 /* ArticlesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0453FD5C238E2F49008DAA08 /* ArticlesCell.xib */; };
+		0453FD60238E3855008DAA08 /* ServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD5F238E3855008DAA08 /* ServiceController.swift */; };
 		0DF1E63A9384BD45F61EBD3D /* Pods_ArticlesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E51002081A52C8D42C01118 /* Pods_ArticlesTests.framework */; };
 		A7FE5AF6F7B56C838D368822 /* Pods_Articles_ArticlesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B195F95C8229A41110418 /* Pods_Articles_ArticlesUITests.framework */; };
 		EC0EFA9C515C3CEBC8837105 /* Pods_Articles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EEF86D9F913CE6861955743 /* Pods_Articles.framework */; };
@@ -68,6 +69,7 @@
 		0453FD58238E2A49008DAA08 /* MultimediaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultimediaEntity.swift; sourceTree = "<group>"; };
 		0453FD5B238E2F49008DAA08 /* ArticlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesCell.swift; sourceTree = "<group>"; };
 		0453FD5C238E2F49008DAA08 /* ArticlesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArticlesCell.xib; sourceTree = "<group>"; };
+		0453FD5F238E3855008DAA08 /* ServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceController.swift; sourceTree = "<group>"; };
 		0CF7EE182BE85EF85517EF49 /* Pods-Articles-ArticlesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Articles-ArticlesUITests.release.xcconfig"; path = "Target Support Files/Pods-Articles-ArticlesUITests/Pods-Articles-ArticlesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1EEF86D9F913CE6861955743 /* Pods_Articles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Articles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E51002081A52C8D42C01118 /* Pods_ArticlesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArticlesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +145,7 @@
 				0453FD29238D1EE9008DAA08 /* Info.plist */,
 				0453FD4B238D3410008DAA08 /* PopupSelectDateVC.swift */,
 				0453FD4C238D3410008DAA08 /* PopupSelectDateVC.xib */,
+				0453FD5F238E3855008DAA08 /* ServiceController.swift */,
 			);
 			path = Articles;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				0453FD1C238D1EE6008DAA08 /* AppDelegate.swift in Sources */,
 				0453FD1E238D1EE6008DAA08 /* SceneDelegate.swift in Sources */,
 				0453FD55238E273D008DAA08 /* DocsEntity.swift in Sources */,
+				0453FD60238E3855008DAA08 /* ServiceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

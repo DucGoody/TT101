@@ -7,18 +7,70 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class ArticlesCell: UITableViewCell {
-
+    @IBOutlet weak var viewParent: UIView!
+    @IBOutlet weak var lbDate: UILabel!
+    @IBOutlet weak var lbDescription: UILabel!
+    @IBOutlet weak var lbName: UILabel!
+    @IBOutlet weak var ivArticle: UIImageView!
+    @IBOutlet weak var viewLoad: UIView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
+    let dis = DisposeBag()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        self.selectionStyle = .none
+        self.indicator.startAnimating()
     }
     
+    func binData(docs: DocsEntity) {
+        self.lbName.text = docs.headline.main
+        self.lbDate.text = self.convertDateToString(date: docs.pubDate)
+        if docs.snippet.elementsEqual("") || docs.snippet.count <= 0 {
+            docs.snippet = "xxx"
+        }
+        self.lbDescription.text = docs.snippet
+        //loadimage
+        if docs.multimedia.count > 0 {
+            var urlString = docs.multimedia[0].url
+            urlString = "https://www.nytimes.com/\(urlString)"
+            let url = URL.init(string: urlString)
+            if let url = url {
+                let urlRequest = URLRequest.init(url: url)
+                URLSession.shared.rx
+                    .response(request: urlRequest)
+                    .subscribeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (data) in
+                        DispatchQueue.main.async {
+                            self.ivArticle.image = UIImage.init(data: data.data)
+                        }
+                    }, onError: { (error) in
+                        self.hiddenViewLoad()
+                        print(error)
+                    }, onCompleted: {
+                        self.hiddenViewLoad()
+                    }, onDisposed: nil).disposed(by: dis)
+            }
+        }
+    }
+    
+    func hiddenViewLoad() {
+        DispatchQueue.main.async {
+            self.viewLoad.isHidden = true
+        }
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    func convertDateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dEEEE, MMM d, yyyy"
+        return formatter.string(from: date)
+    }
 }

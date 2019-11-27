@@ -25,6 +25,8 @@ class ArticlesCell: UITableViewCell {
         super.awakeFromNib()
         self.selectionStyle = .none
         self.indicator.startAnimating()
+        self.viewParent.layer.borderColor = UIColor.gray.cgColor
+        self.viewParent.layer.borderWidth = 0.5
     }
     
     func binData(docs: DocsEntity) {
@@ -70,7 +72,7 @@ class ArticlesCell: UITableViewCell {
     
     func convertDateToString(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dEEEE, MMM d, yyyy"
+        formatter.dateFormat = "EEEE, MMM d, yyyy"
         return formatter.string(from: date)
     }
 }

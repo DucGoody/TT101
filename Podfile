@@ -22,4 +22,5 @@ target 'Articles' do
 	pod 'SwiftyJSON'
 	pod 'ObjectMapper'
 	pod 'SnapKit'
+	pod 'RxWebKit'
 end

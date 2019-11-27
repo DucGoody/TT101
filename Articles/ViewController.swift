@@ -45,6 +45,8 @@ class ViewController: UIViewController {
         self.tableView.separatorColor = .clear
         tableView.register(UINib.init(nibName: articlesCell, bundle: nil), forCellReuseIdentifier: articlesCell)
         self.updateDate()
+        self.viewDate.layer.borderColor = UIColor.gray.cgColor
+        self.viewDate.layer.borderWidth = 0.5
         self.indicator.startAnimating()
     }
     
@@ -52,9 +54,14 @@ class ViewController: UIViewController {
         let vc = PopupSelectDateVC.init(dateSelected: self.dateFilter, viewInput: self.viewDate)
         vc.modalPresentationStyle = .overCurrentContext
         vc.onSelectDate = { [unowned self] date in
-            self.dateFilter = date
-            self.indicator.isHidden = false
-            self.getDataLatest()
+            if self.checkDate(date: date) {
+                self.dateFilter = date
+                self.updateDate()
+                self.indicator.isHidden = false
+                self.getDataLatest()
+            } else {
+                return
+            }
         }
         self.present(vc, animated: false, completion: nil)
     }
@@ -75,7 +82,9 @@ class ViewController: UIViewController {
                 print("Có lỗi xảy ra vui lòng thử lại")
                 return
             }
-            self.binData(datas: datas)
+            DispatchQueue.main.async {
+                self.binData(datas: datas)
+            }
         }
     }
     
@@ -84,13 +93,35 @@ class ViewController: UIViewController {
             cell.binData(docs: item)
         }.disposed(by: disposeBag)
         
-        self.tableView.rx.modelDeleted(DocsEntity.self).subscribe(onNext: { (value) in
-            self.showDetail(item: value)
-        }, onDisposed: nil).disposed(by: disposeBag)
+        Observable
+            .zip(self.tableView.rx.itemSelected, tableView.rx.modelSelected(DocsEntity.self))
+        .bind { [unowned self] indexPath, model in
+            self.showDetail(item: model)
+        }
+        .disposed(by: disposeBag)
     }
     
     func showDetail(item: DocsEntity) {
+        let vc = ArticlesDetailVC()
+        if let url = URL.init(string: item.webUrl) {
+            vc.url = url
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
+    func checkDate(date: Date) -> Bool {
+        let calendar = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        let currentMonthInt1 = (calendar?.component(NSCalendar.Unit.month, from: date)) ?? 11
+        let currentYearInt1 = (calendar?.component(NSCalendar.Unit.year, from: date)) ?? 2019
         
+        let currentMonthInt2 = (calendar?.component(NSCalendar.Unit.month, from: self.dateFilter)) ?? 11
+        let currentYearInt2 = (calendar?.component(NSCalendar.Unit.year, from: self.dateFilter)) ?? 2019
+        
+        if currentMonthInt1 == currentMonthInt2 && currentYearInt1 == currentYearInt2 {
+            return false
+        }
+        return true
     }
 }
 

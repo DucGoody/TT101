@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import MonthYearPicker
 
 class PopupSelectDateVC: UIViewController {
     //control
@@ -17,6 +18,7 @@ class PopupSelectDateVC: UIViewController {
     var viewContentDate: UIView!
     var datePickerView: UIDatePicker!
     var btnDoneSelect: UIButton!
+    var picker: MonthYearPickerView!
     
     let disposeBag = DisposeBag()
     var dateSelected: Date = Date()
@@ -73,25 +75,38 @@ class PopupSelectDateVC: UIViewController {
         }
         
         //date picker
-        self.datePickerView = UIDatePicker()
-        self.viewContentDate.addSubview(self.datePickerView)
-        self.datePickerView.snp.makeConstraints { (picker) in
-            picker.top.equalTo(self.viewContentDate).inset(16)
-            picker.left.equalTo(self.viewContentDate).inset(16)
-            picker.right.equalTo(self.viewContentDate).inset(16)
-            picker.bottom.equalTo(self.btnDoneSelect.snp_top).inset(16)
-        }
-        self.datePickerView.datePickerMode = .date
-        self.datePickerView.subviews[0].subviews[0].subviews[0].isHidden = true
-        self.datePickerView.setDate(self.dateSelected, animated: false)
-        self.datePickerView.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        self.picker = MonthYearPickerView.init(frame: CGRect.init(x: 0, y: 0, width: self.viewContentDate.frame.size.width, height: self.viewContentDate.frame.size.height - 66))
+                self.viewContentDate.addSubview(self.picker)
+                self.picker.snp.makeConstraints { (picker) in
+                    picker.top.equalTo(self.viewContentDate).inset(16)
+                    picker.left.equalTo(self.viewContentDate).inset(16)
+                    picker.right.equalTo(self.viewContentDate).inset(16)
+                    picker.bottom.equalTo(self.btnDoneSelect.snp_top).inset(16)
+                }
+        self.picker.setDate(self.dateSelected, animated: false)
+//        picker.dateSelectionHandler = { date in
+//          print("selected: \(date)")
+//        }
+//        self.datePickerView = UIDatePicker()
+//        self.viewContentDate.addSubview(self.datePickerView)
+//        self.datePickerView.snp.makeConstraints { (picker) in
+//            picker.top.equalTo(self.viewContentDate).inset(16)
+//            picker.left.equalTo(self.viewContentDate).inset(16)
+//            picker.right.equalTo(self.viewContentDate).inset(16)
+//            picker.bottom.equalTo(self.btnDoneSelect.snp_top).inset(16)
+//        }
+//        self.datePickerView.datePickerMode = .date
+//        self.datePickerView.subviews[0].subviews[0].subviews[0].isHidden = true
+//        self.datePickerView.setDate(self.dateSelected, animated: false)
+//        self.datePickerView.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
     }
     
-    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        self.dateSelected = sender.date
-    }
+//    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+//        self.dateSelected = sender.date
+//    }
     
     func actionDoneSelect() {
+        self.dateSelected = self.picker.date
         self.onSelectDate?(dateSelected)
         self.closePopup()
     }

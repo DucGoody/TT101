@@ -23,4 +23,5 @@ target 'Articles' do
 	pod 'ObjectMapper'
 	pod 'SnapKit'
 	pod 'RxWebKit'
+	pod "MonthYearPicker"
 end

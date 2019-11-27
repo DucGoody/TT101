@@ -50,4 +50,39 @@ class ServiceController {
             }
         }
     }
+    
+    func searchAriticles(keyword: String, page: Int, completion: @escaping (_ docs: [DocsEntity]?) -> Void) {
+        let keywordFormat = keyword.trimmingCharacters(in: CharacterSet.whitespaces).folding(options: .diacriticInsensitive, locale: .current)
+        
+        let urlString = "\(domain)search/v2/articlesearch.json?q=\(keywordFormat)&api-key=\(key)&page=1"
+        let url = URL.init(string: urlString)
+        
+        guard let url2 = url else {
+            completion(nil)
+            return
+        }
+        
+        Alamofire.request(url2).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                if response.response?.statusCode == 200 {
+                    if let data = response.data, let json = try? JSON(data: data).object {
+                        if let jsonItem = json as? [String : Any] {
+                            if let item = Mapper<ResponseArticleLatest>().map(JSON: jsonItem)//ResponseArticleLatest.init(JSON: jsonItem, context: nil)
+                            {
+                                let doc = item.response.docs
+                                completion(doc)
+                                return;
+                            }
+                        }
+                    }
+                }
+                completion(nil)
+                break
+            case .failure:
+                completion(nil)
+                break
+            }
+        }
+    }
 }

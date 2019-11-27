@@ -33,6 +33,8 @@ class DocsEntity: Mappable {
         mapping(map: map)
     }
     
+    init() {}
+    
     func mapping(map: Map) {
         abstract <- map["abstract"]
         webUrl <- map["web_url"]

@@ -67,7 +67,9 @@ class ViewController: UIViewController {
     }
     
     @objc func clickRightNavigation() {
-        
+        let vc = SearchVC()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false, completion: nil)
     }
     
     func updateDate() {
@@ -82,12 +84,10 @@ class ViewController: UIViewController {
                 print("Có lỗi xảy ra vui lòng thử lại")
                 return
             }
-            DispatchQueue.main.async {
-                self.binData(datas: datas)
-            }
+            self.binData(datas: datas)
         }
     }
-    
+    //chuyển sang rxDataSource
     func binData(datas: [DocsEntity]) {
         Observable.just(datas).bind(to: self.tableView.rx.items(cellIdentifier: articlesCell, cellType: ArticlesCell.self)) { (row, item, cell) in
             cell.binData(docs: item)

@@ -7,32 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B3843423-5DFF-42FF-A531-7C3D66D38C55"
+            uuid = "D3C1F780-AECF-489F-A668-B8DA44591935"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Articles/ViewController.swift"
+            filePath = "Articles/Search/SearchVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "showDetail(item:)"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "binData(datasNew:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5BBB9DEE-53DD-4DEF-B2E5-D7DF70FC069E"
+            uuid = "56A6CE93-4FB4-4E51-A8AB-E0CEC4D556C6"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/MonthYearPicker/Sources/MonthYearPickerView.swift"
+            filePath = "Articles/Search/SearchVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "pickerView(_:didSelectRow:inComponent:)"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "showDetail(item:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

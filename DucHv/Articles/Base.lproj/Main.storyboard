@@ -56,18 +56,34 @@
                                 <rect key="frame" x="0.0" y="158" width="414" height="704"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="zv6-y4-84P">
-                                <rect key="frame" x="197" y="438" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEI-Kf-ccu">
+                                <rect key="frame" x="192" y="465" width="30" height="30"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Keq-9y-kRT">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="Keq-9y-kRT" firstAttribute="leading" secondItem="XEI-Kf-ccu" secondAttribute="leading" id="MZZ-wd-ONG"/>
+                                    <constraint firstAttribute="trailing" secondItem="Keq-9y-kRT" secondAttribute="trailing" id="Rk9-2h-LH4"/>
+                                    <constraint firstItem="Keq-9y-kRT" firstAttribute="centerY" secondItem="XEI-Kf-ccu" secondAttribute="centerY" id="fmD-Yc-Sf4"/>
+                                    <constraint firstItem="Keq-9y-kRT" firstAttribute="top" secondItem="XEI-Kf-ccu" secondAttribute="top" id="h3U-X5-MsL"/>
+                                    <constraint firstAttribute="height" constant="30" id="jZ7-gW-Nd9"/>
+                                    <constraint firstAttribute="bottom" secondItem="Keq-9y-kRT" secondAttribute="bottom" id="nw8-il-5mT"/>
+                                    <constraint firstAttribute="width" constant="30" id="vRu-NK-Bpe"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="XEI-Kf-ccu" firstAttribute="centerY" secondItem="rPh-RV-bVb" secondAttribute="centerY" constant="-30" id="1ay-8c-MwA"/>
                             <constraint firstItem="rPh-RV-bVb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4FF-cd-msP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r9S-MY-8Mf" secondAttribute="trailing" constant="16" id="PmX-ht-pAo"/>
                             <constraint firstItem="r9S-MY-8Mf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="RTb-OO-Ksg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rPh-RV-bVb" secondAttribute="trailing" id="TLA-VH-yKP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rPh-RV-bVb" secondAttribute="bottom" id="VbA-V8-6aT"/>
+                            <constraint firstItem="XEI-Kf-ccu" firstAttribute="centerX" secondItem="rPh-RV-bVb" secondAttribute="centerX" id="dD1-yg-nZZ"/>
                             <constraint firstItem="r9S-MY-8Mf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="f9A-2G-99P"/>
                             <constraint firstItem="rPh-RV-bVb" firstAttribute="top" secondItem="r9S-MY-8Mf" secondAttribute="bottom" constant="16" id="yUe-O4-yEC"/>
                         </constraints>
@@ -75,10 +91,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="xrj-DH-nxu"/>
                     <connections>
-                        <outlet property="indicator" destination="zv6-y4-84P" id="KM7-VZ-ktT"/>
+                        <outlet property="indicator" destination="Keq-9y-kRT" id="YaR-0D-7G3"/>
                         <outlet property="lbDate" destination="GPW-m0-wH0" id="5a3-2a-kWR"/>
                         <outlet property="tableView" destination="rPh-RV-bVb" id="4lc-XS-EWg"/>
                         <outlet property="viewDate" destination="r9S-MY-8Mf" id="SdC-Tg-BpC"/>
+                        <outlet property="viewLoad" destination="XEI-Kf-ccu" id="F6E-Pa-RKa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

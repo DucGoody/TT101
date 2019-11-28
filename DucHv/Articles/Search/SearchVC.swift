@@ -86,7 +86,10 @@ class SearchVC: UIViewController {
         self.tfInput.rx.controlEvent([.editingChanged])
             .asObservable().subscribe(onNext: { (_) in
                 self.timer?.invalidate()
-                self.viewLoad.isHidden = false
+                let text = self.tfInput.text?.trimmingCharacters(in: .whitespaces)
+                if let keyword = text, !keyword.isEmpty {
+                    self.viewLoad.isHidden = false
+                }
                 self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.getDataByKeyword), userInfo: nil, repeats: false)
             }).disposed(by: disposeBag)
         
@@ -122,6 +125,7 @@ class SearchVC: UIViewController {
     
     //chuyển sang rxDataSource
     func binData(datasNew: [DocsEntity]) {
+        self.tableView.dataSource = nil
         if self.datas.count > 0, let lastEntity = self.datas.last {
             if lastEntity.id.elementsEqual("loadmore@cell") {
                 self.datas.removeLast()
@@ -166,6 +170,7 @@ class SearchVC: UIViewController {
     
     func getArticlesCell(item: DocsEntity) -> UITableViewCell {
         if let cell = self.tableView.dequeueReusableCell(withIdentifier: articlesCell) as? ArticlesCell {
+            cell.indicator.startAnimating()
             cell.binData(docs: item)
             return cell
         }

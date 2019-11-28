@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var lbDate: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var viewLoad: UIView!
     
     var dateFilter: Date = Date()
     let disposeBag = DisposeBag()
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
     }
     
     func configUI() {
+        self.viewLoad.layer.cornerRadius = 10
         self.viewDate.layer.cornerRadius = 5
         self.tableView.backgroundColor = .clear
         self.tableView.separatorColor = .clear
@@ -48,7 +50,7 @@ class ViewController: UIViewController {
         self.viewDate.layer.borderColor = UIColor.gray.cgColor
         self.viewDate.layer.borderWidth = 0.5
         self.indicator.startAnimating()
-        self.tableView.delegate = nil
+        self.addShadow(view: self.viewLoad)
     }
     
     @IBAction func actionSelectDate(_ sender: Any) {
@@ -58,7 +60,7 @@ class ViewController: UIViewController {
             if self.checkDate(date: date) {
                 self.dateFilter = date
                 self.updateDate()
-                self.indicator.isHidden = false
+                self.viewLoad.isHidden = false
                 self.getDataLatest()
             } else {
                 return
@@ -80,7 +82,7 @@ class ViewController: UIViewController {
     
     func getDataLatest() {
         ServiceController().getLatestAriticles(date: dateFilter) { (datas) in
-            self.indicator.isHidden = true
+            self.viewLoad.isHidden = true
             guard let datas = datas else {
                 print("Có lỗi xảy ra vui lòng thử lại")
                 return
@@ -90,6 +92,7 @@ class ViewController: UIViewController {
     }
     //chuyển sang rxDataSource
     func binData(datas: [DocsEntity]) {
+        self.tableView.dataSource = nil
         Observable.just(datas).bind(to: self.tableView.rx.items(cellIdentifier: articlesCell, cellType: ArticlesCell.self)) { (row, item, cell) in
             cell.binData(docs: item)
         }.disposed(by: disposeBag)
@@ -123,6 +126,13 @@ class ViewController: UIViewController {
             return false
         }
         return true
+    }
+    
+    func addShadow(view: UIView) {
+        view.layer.shadowColor = UIColor.gray.cgColor
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 6
     }
 }
 

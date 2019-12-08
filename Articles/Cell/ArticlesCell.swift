@@ -32,9 +32,6 @@ class ArticlesCell: UITableViewCell {
     func binData(docs: DocsEntity) {
         self.lbName.text = docs.headline.main
         self.lbDate.text = self.convertDateToString(date: docs.pubDate)
-        if docs.snippet.elementsEqual("") || docs.snippet.count <= 0 {
-            docs.snippet = "xxx"
-        }
         self.lbDescription.text = docs.snippet
         //loadimage
         if docs.multimedia.count > 0 {

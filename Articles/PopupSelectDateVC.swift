@@ -62,10 +62,12 @@ class PopupSelectDateVC: UIViewController {
         self.btnDoneSelect.setTitleColor(.white, for: .normal)
         self.btnDoneSelect.layer.cornerRadius = 5
         self.btnDoneSelect.backgroundColor = UIColor.link
-        self.btnDoneSelect.rx.tap.bind { [unowned self] in
+        
+        self.btnDoneSelect.rx.tap.asDriver()
+        .throttle(.milliseconds(1000))
+        .drive(onNext: { (_) in
             self.actionDoneSelect()
-        }
-        .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         self.viewContentDate.addSubview(self.btnDoneSelect)
         self.btnDoneSelect.snp.makeConstraints { (btn) in
             btn.bottom.equalTo(self.viewContentDate).inset(16)

@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class DocsEntity: Mappable {
+struct DocsEntity: Mappable {
     var abstract: String = ""
     var webUrl: String = ""
     var snippet: String = ""
@@ -29,13 +29,11 @@ class DocsEntity: Mappable {
     var wordCount:Int = 0
     var uri:String = ""
     
-    required init?(map: Map) {
+    init?(map: Map) {
         mapping(map: map)
     }
     
-    init() {}
-    
-    func mapping(map: Map) {
+    mutating func mapping(map: Map) {
         abstract <- map["abstract"]
         webUrl <- map["web_url"]
         snippet <- map["snippet"]
@@ -144,3 +142,4 @@ class Person: Mappable {
         rank <- map["rank"]
     }
 }
+

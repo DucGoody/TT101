@@ -25,45 +25,59 @@ class SearchVC: UIViewController {
     let disposeBag = DisposeBag()
     let articlesCell: String = "ArticlesCell"
     let loadMoreCell: String = "LoadMoreCell"
-    var pageIndex: Int = 0
     var datas: [DocsEntity] = []
     let refreshControl = UIRefreshControl()
+    var isShowLoadding: Bool = true
     var timer: Timer?
-    var isRefresh: Bool = false
-    
-    var dataSource = RxTableViewSectionedReloadDataSource<SectionTableViewCell>(
-        configureCell: { (_,_,_,_) in
-            fatalError()
-    })
-    
-    @IBOutlet weak var cstPaddingLeftViewSearch: NSLayoutConstraint!
+    var viewModel: ArticlesViewModel!
+    var paramSearch = ParamSearchArticles()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configUI()
+        self.viewModel = ArticlesViewModel()
+        self.viewModel.searchArticles()
+        self.initUI()
     }
     
-    func configUI() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let heightTopArea = self.view.safeAreaInsets.top
+        self.cstHeightStatusView.constant = heightTopArea
+    }
+    
+    //init UI
+    func initUI() {
         self.viewSearch.layer.cornerRadius = 5
         self.viewSearch.layer.borderColor = UIColor.gray.cgColor
         self.viewSearch.layer.borderWidth = 0.5
+        
+        //
         self.viewLoad.layer.cornerRadius = 10
-        self.indicator.startAnimating()
         self.addShadow(view: viewLoad)
         self.viewLoad.isHidden = true
+        self.indicator.startAnimating()
         
-        self.btnCancel.rx.tap.bind { [unowned self] in
-            self.dismiss(animated: false, completion: nil)
-        }.disposed(by: disposeBag)
+        //action cancel
+        self.btnCancel.rx.tap.asDriver()
+            .throttle(.milliseconds(2000))
+            .drive(onNext: { (_) in
+                self.dismiss(animated: false, completion: nil)
+            }).disposed(by: disposeBag)
         
-        self.btnInput.rx.tap.bind { [unowned self] in
+        //action show keybroad
+        self.btnInput.rx.tap.asDriver()
+        .throttle(.milliseconds(2000))
+        .drive(onNext: { (_) in
             self.tfInput.becomeFirstResponder()
-        }.disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
         self.initTableView()
         self.initTextFeild()
+        self.binData()
+        self.selectItem()
     }
     
+    //init tableView
     func initTableView() {
         self.tableView.register(UINib.init(nibName: articlesCell, bundle: nil), forCellReuseIdentifier: articlesCell)
         self.tableView.register(UINib.init(nibName: loadMoreCell, bundle: nil), forCellReuseIdentifier: loadMoreCell)
@@ -77,16 +91,17 @@ class SearchVC: UIViewController {
         } else {
             self.tableView.addSubview(refreshControl)
         }
-        self.refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.refreshControl.tintColor = UIColor.lightGray
     }
     
+    // init TextField
     func initTextFeild() {
         self.tfInput.becomeFirstResponder()
+        
         self.tfInput.rx.controlEvent([.editingChanged])
             .asObservable().subscribe(onNext: { (_) in
                 self.timer?.invalidate()
-                self.viewLoad.isHidden = false
                 self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.getDataByKeyword), userInfo: nil, repeats: false)
             }).disposed(by: disposeBag)
         
@@ -95,67 +110,45 @@ class SearchVC: UIViewController {
         }).disposed(by: disposeBag)
     }
     
-    @objc private func updateData() {
-        self.pageIndex = 0
-        self.isRefresh = true
+    // action pulltorefresh
+    @objc private func refreshData() {
+        self.isShowLoadding = false
         self.getDataByKeyword()
     }
     
-    @objc func getDataByKeyword() {
+    // action get data by keyword
+    @objc func getDataByKeyword(_ isLoadMore: Bool = false) {
         let text = self.tfInput.text?.trimmingCharacters(in: .whitespaces)
         guard let keyword = text, !keyword.isEmpty else { return }
+        if !isLoadMore { self.paramSearch.pageIndex = 0 }
+        self.paramSearch.keyword = keyword
         
-        ServiceController().searchAriticles(keyword: keyword, page: self.pageIndex) { (datas) in
-            guard let datas = datas else {
-                print("Có lỗi xảy ra vui lòng thử lại")
-                return
-            }
-            if datas.count > 0 && self.isRefresh {
-                self.datas.removeAll()
-            }
-            self.viewLoad.isHidden = true
+        self.viewLoad.isHidden = !isShowLoadding
+        
+        Observable.of(self.paramSearch).bind(to: self.viewModel.paramSearch).disposed(by: self.disposeBag)
+    }
+    
+    // bin data to tableview
+    func binData() {
+        self.viewModel.searchResult2.asObservable().bind(to: self.tableView.rx.items(dataSource: self.dataSource())).disposed(by: disposeBag)
+        self.viewModel.onLoadSucces = {
             self.refreshControl.endRefreshing()
-            
-            self.binData(datasNew: datas)
+            self.isShowLoadding = true
+            self.viewLoad.isHidden = true
         }
     }
     
-    //chuyển sang rxDataSource
-    func binData(datasNew: [DocsEntity]) {
-        if self.datas.count > 0, let lastEntity = self.datas.last {
-            if lastEntity.id.elementsEqual("loadmore@cell") {
-                self.datas.removeLast()
-            }
-        }
-        self.datas.append(contentsOf: datasNew)
-        
-        if datasNew.count == 10 {
-            let entityLoadMore = DocsEntity()
-            entityLoadMore.id = "loadmore@cell"
-            self.datas.append(entityLoadMore)
-        }
-        
-        dataSource = RxTableViewSectionedReloadDataSource<SectionTableViewCell>(configureCell: { (dataSource, tableview, indexPath, entity) -> UITableViewCell in
-            if entity.id.elementsEqual("loadmore@cell") {
-                return self.getLoadMoreCell()
-            } else {
-                return self.getArticlesCell(item: entity)
-            }
-        })
-        
-        let section = [SectionTableViewCell(items: self.datas)]
-        Observable.just(section)
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
+    //select item
+    func selectItem() {
         Observable
             .zip(self.tableView.rx.itemSelected, tableView.rx.modelSelected(DocsEntity.self))
-            .bind { [unowned self] indexPath, model in
-                self.showDetail(item: model)
+        .bind { [unowned self] indexPath, model in
+            self.showDetail(item: model)
         }
         .disposed(by: disposeBag)
     }
     
+    //get cell load more
     func getLoadMoreCell() -> UITableViewCell {
         if let cell = self.tableView.dequeueReusableCell(withIdentifier: loadMoreCell) as? LoadMoreCell {
             cell.indicator.startAnimating()
@@ -164,6 +157,7 @@ class SearchVC: UIViewController {
         return UITableViewCell()
     }
     
+    // get cell article
     func getArticlesCell(item: DocsEntity) -> UITableViewCell {
         if let cell = self.tableView.dequeueReusableCell(withIdentifier: articlesCell) as? ArticlesCell {
             cell.binData(docs: item)
@@ -172,18 +166,13 @@ class SearchVC: UIViewController {
         return UITableViewCell()
     }
     
+    // go to Detail Article
     func showDetail(item: DocsEntity) {
         let vc = ArticlesDetailVC()
         if let url = URL.init(string: item.webUrl) {
             vc.url = url
             self.navigationController?.pushViewController(vc, animated: true)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let heightTopArea = self.view.safeAreaInsets.top
-        self.cstHeightStatusView.constant = heightTopArea
     }
     
     func addShadow(view: UIView) {
@@ -195,24 +184,39 @@ class SearchVC: UIViewController {
 }
 
 extension SearchVC : UITableViewDelegate {
+    // action load more
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let _ = tableView.dequeueReusableCell(withIdentifier: loadMoreCell) as? LoadMoreCell {
-            self.pageIndex += 1
-            self.getDataByKeyword()
+        let arrCellName = NSStringFromClass(cell.classForCoder).components(separatedBy: ".")
+        if loadMoreCell.elementsEqual(arrCellName.last ?? "") {
+            self.paramSearch.pageIndex += 1
+            self.isShowLoadding = false
+            self.getDataByKeyword(true)
         }
     }
 }
 
-struct SectionTableViewCell {
-    var items: [Item]
+extension SearchVC {
+    //init data source
+    func dataSource() -> RxTableViewSectionedReloadDataSource<DocsSection> {
+        return RxTableViewSectionedReloadDataSource<DocsSection>(
+            configureCell: { dataSource, table, indexPath, item in
+                if let item = item as? DocsEntity {
+                    return self.getArticlesCell(item: item)
+                } else {
+                    return self.getLoadMoreCell()
+                }
+        })
+    }
 }
 
-extension SectionTableViewCell: SectionModelType {
-    typealias Item = DocsEntity
-    
-    init(original: SectionTableViewCell, items: [Item]) {
+struct DocsSection {
+    var items: [Any]
+}
+
+extension DocsSection: SectionModelType {
+    typealias Item = Any
+    init(original: DocsSection, items: [Item]) {
         self = original
         self.items = items
     }
 }
-

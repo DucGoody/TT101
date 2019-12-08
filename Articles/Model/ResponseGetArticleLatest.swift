@@ -9,15 +9,16 @@
 import UIKit
 import ObjectMapper
 
-class ResponseArticleLatest: Mappable {
+struct ResponseArticleLatest: Mappable {
+    
     var copyright: String = ""
     var response: ResponseDetailArticleLatest!
     
-    required init?(map: Map) {
+    init?(map: Map) {
         mapping(map: map)
     }
-    
-    func mapping(map: Map) {
+
+    mutating func mapping(map: Map) {
         copyright <- map["copyright"]
         response <- map["response"]
     }

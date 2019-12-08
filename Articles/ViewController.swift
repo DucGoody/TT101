@@ -9,8 +9,6 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import SnapKit
-import Alamofire
 
 class ViewController: UIViewController {
     @IBOutlet weak var viewDate: UIView!
@@ -20,9 +18,10 @@ class ViewController: UIViewController {
     
     var dateFilter: Date = Date()
     let disposeBag = DisposeBag()
-    
     let articlesCell = "ArticlesCell"
-    lazy var dateFormatter: DateFormatter = {
+    var viewModel: ArticlesViewModel!
+    
+    lazy var dateFormatter: DateFormatter = { [unowned self] in
           let formatter = DateFormatter()
           formatter.dateFormat = "MMMM yyyy"
           return formatter
@@ -30,26 +29,31 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.configUI()
+        self.updateDate()
+        self.viewModel = ArticlesViewModel()
+        self.viewModel.getAllArticles()
+        self.getDataLatest()
+    }
+    
+    //config UI
+    func configUI() {
         self.navigationItem.title = "NewYorkTimes"
         let imageSearch = UIImage.init(named: "ic_search")?.withRenderingMode(.alwaysOriginal)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: imageSearch, style: .plain, target: self, action:#selector(clickRightNavigation))
         
-        self.configUI()
-        self.getDataLatest()
-    }
-    
-    func configUI() {
-        self.viewDate.layer.cornerRadius = 5
         self.tableView.backgroundColor = .clear
         self.tableView.separatorColor = .clear
-        tableView.register(UINib.init(nibName: articlesCell, bundle: nil), forCellReuseIdentifier: articlesCell)
-        self.updateDate()
+        self.tableView.register(UINib.init(nibName: articlesCell, bundle: nil), forCellReuseIdentifier: articlesCell)
+        
+        self.viewDate.layer.cornerRadius = 5
         self.viewDate.layer.borderColor = UIColor.gray.cgColor
         self.viewDate.layer.borderWidth = 0.5
+        
         self.indicator.startAnimating()
     }
     
+    // action chọn date
     @IBAction func actionSelectDate(_ sender: Any) {
         let vc = PopupSelectDateVC.init(dateSelected: self.dateFilter, viewInput: self.viewDate)
         vc.modalPresentationStyle = .overCurrentContext
@@ -58,41 +62,38 @@ class ViewController: UIViewController {
                 self.dateFilter = date
                 self.updateDate()
                 self.indicator.isHidden = false
-                self.getDataLatest()
-            } else {
-                return
+                Observable.of(self.dateFilter).bind(to: self.viewModel.paramGetAll).disposed(by: self.disposeBag)
             }
         }
         self.present(vc, animated: false, completion: nil)
     }
     
+    //chuyển sang màn hình tìm kiếm
     @objc func clickRightNavigation() {
         let vc = SearchVC()
         vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
+    //update view sau khi chọn time
     func updateDate() {
         let strDate = self.dateFormatter.string(from: self.dateFilter)
         self.lbDate.text = strDate
     }
     
+    //get data
     func getDataLatest() {
-        ServiceController().getLatestAriticles(date: dateFilter) { (datas) in
+        Observable.of(dateFilter).bind(to: viewModel.paramGetAll).disposed(by: disposeBag)
+        viewModel.searchResult.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: articlesCell, cellType: ArticlesCell.self)) { index, entity, cell in
+            cell.binData(docs: entity)
             self.indicator.isHidden = true
-            guard let datas = datas else {
-                print("Có lỗi xảy ra vui lòng thử lại")
-                return
-            }
-            self.binData(datas: datas)
-        }
-    }
-    //chuyển sang rxDataSource
-    func binData(datas: [DocsEntity]) {
-        Observable.just(datas).bind(to: self.tableView.rx.items(cellIdentifier: articlesCell, cellType: ArticlesCell.self)) { (row, item, cell) in
-            cell.binData(docs: item)
         }.disposed(by: disposeBag)
         
+        selectItem()
+    }
+    
+    //select item
+    func selectItem() {
         Observable
             .zip(self.tableView.rx.itemSelected, tableView.rx.modelSelected(DocsEntity.self))
         .bind { [unowned self] indexPath, model in
@@ -101,6 +102,7 @@ class ViewController: UIViewController {
         .disposed(by: disposeBag)
     }
     
+    //chuyển sang màn hình chi tiết
     func showDetail(item: DocsEntity) {
         let vc = ArticlesDetailVC()
         if let url = URL.init(string: item.webUrl) {
@@ -110,6 +112,7 @@ class ViewController: UIViewController {
     }
     
     
+    //check trùng tháng và trùng năm
     func checkDate(date: Date) -> Bool {
         let calendar = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
         let currentMonthInt1 = (calendar?.component(NSCalendar.Unit.month, from: date)) ?? 11

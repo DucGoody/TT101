@@ -15,7 +15,8 @@ class ServiceController {
     let domain = "https://api.nytimes.com/svc/"
     let key = "pH4PGY4gblvAcFIMKV8x7MixeFUrf1AR"
     
-    func getLatestAriticles(date: Date, completion: @escaping (_ docs: [DocsEntity]?) -> Void) {
+    // lấy tất cả Article
+    func getLatestArticles(date: Date, completion: @escaping (_ docs: ResponseArticleLatest?) -> Void) {
         let calendar = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
         let currentMonthInt = (calendar?.component(NSCalendar.Unit.month, from: Date())) ?? 11
         let currentYearInt = (calendar?.component(NSCalendar.Unit.year, from: Date())) ?? 2019
@@ -31,16 +32,14 @@ class ServiceController {
             switch response.result {
             case .success:
                 if response.response?.statusCode == 200 {
-                    if let data = response.data, let json = try? JSON(data: data).object {
-                        if let jsonItem = json as? [String : Any] {
-                            if let item = Mapper<ResponseArticleLatest>().map(JSON: jsonItem)//ResponseArticleLatest.init(JSON: jsonItem, context: nil)
-                            {
-                                let doc = item.response.docs
-                                completion(doc)
-                                return;
-                            }
-                        }
+                    guard let data = response.data,
+                        let json = try? JSON(data: data).object,
+                        let jsonItem = json as? [String : Any]
+                        else {
+                            completion(nil)
+                            return
                     }
+                    completion(Mapper<ResponseArticleLatest>().map(JSON: jsonItem))
                 }
                 completion(nil)
                 break
@@ -51,14 +50,14 @@ class ServiceController {
         }
     }
     
-    func searchAriticles(keyword: String, page: Int, completion: @escaping (_ docs: [DocsEntity]?) -> Void) {
+    // tìm kiếm Article
+    func searchArticles(keyword: String, page: Int, completion: @escaping (_ docs: ResponseArticleLatest?) -> Void) {
         let keywordFormat = keyword.trimmingCharacters(in: CharacterSet.whitespaces).folding(options: .diacriticInsensitive, locale: .current)
         
         let urlString = "\(domain)search/v2/articlesearch.json?q=\(keywordFormat)&api-key=\(key)&page=1"
         let url = URL.init(string: urlString)
         
-        guard let url2 = url else {
-            completion(nil)
+        guard let url2 = url else { completion(nil)
             return
         }
         
@@ -66,18 +65,16 @@ class ServiceController {
             switch response.result {
             case .success:
                 if response.response?.statusCode == 200 {
-                    if let data = response.data, let json = try? JSON(data: data).object {
-                        if let jsonItem = json as? [String : Any] {
-                            if let item = Mapper<ResponseArticleLatest>().map(JSON: jsonItem)//ResponseArticleLatest.init(JSON: jsonItem, context: nil)
-                            {
-                                let doc = item.response.docs
-                                completion(doc)
-                                return;
-                            }
-                        }
+                    guard let data = response.data,
+                        let json = try? JSON(data: data).object,
+                        let jsonItem = json as? [String : Any]
+                        else {
+                            completion(nil)
+                            return
                     }
+                    let object = Mapper<ResponseArticleLatest>().map(JSON: jsonItem)
+                    completion(object)
                 }
-                completion(nil)
                 break
             case .failure:
                 completion(nil)

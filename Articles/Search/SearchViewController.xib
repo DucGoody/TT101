@@ -9,16 +9,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController" customModule="Articles" customModuleProvider="target">
             <connections>
-                <outlet property="btnCancel" destination="ZlV-u2-6cy" id="mQw-L9-cPA"/>
-                <outlet property="btnInput" destination="5tg-0x-TBa" id="Gt4-VO-JoB"/>
+                <outlet property="cancelButton" destination="ZlV-u2-6cy" id="aE4-gx-KYd"/>
                 <outlet property="cstHeightStatusView" destination="NwL-B7-dys" id="u6j-Hc-vPt"/>
                 <outlet property="indicator" destination="M3d-cT-Etb" id="vue-Zm-9vm"/>
+                <outlet property="loadingView" destination="w9m-a8-1h7" id="7XO-tB-k5J"/>
+                <outlet property="searchButton" destination="5tg-0x-TBa" id="UnG-Zo-aav"/>
+                <outlet property="searchTextField" destination="Tds-Of-qIr" id="6m4-QD-6a8"/>
+                <outlet property="searchView" destination="hes-I4-ZMi" id="rzg-GS-cRQ"/>
                 <outlet property="tableView" destination="Idh-S6-L7M" id="9zo-MR-UFg"/>
-                <outlet property="tfInput" destination="Tds-Of-qIr" id="DDs-Pg-ixP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewContentSearch" destination="f0g-gz-KXd" id="FOX-68-EPc"/>
-                <outlet property="viewLoad" destination="w9m-a8-1h7" id="r3h-8A-snh"/>
-                <outlet property="viewSearch" destination="hes-I4-ZMi" id="HDS-ve-ZtX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

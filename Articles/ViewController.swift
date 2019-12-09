@@ -11,8 +11,8 @@ import RxCocoa
 import RxSwift
 
 class ViewController: UIViewController {
-    @IBOutlet weak var viewDate: UIView!
-    @IBOutlet weak var lbDate: UILabel!
+    @IBOutlet weak var selectDateView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
@@ -46,16 +46,16 @@ class ViewController: UIViewController {
         self.tableView.separatorColor = .clear
         self.tableView.register(UINib.init(nibName: articlesCell, bundle: nil), forCellReuseIdentifier: articlesCell)
         
-        self.viewDate.layer.cornerRadius = 5
-        self.viewDate.layer.borderColor = UIColor.gray.cgColor
-        self.viewDate.layer.borderWidth = 0.5
+        self.selectDateView.layer.cornerRadius = 5
+        self.selectDateView.layer.borderColor = UIColor.gray.cgColor
+        self.selectDateView.layer.borderWidth = 0.5
         
         self.indicator.startAnimating()
     }
     
     // action chọn date
     @IBAction func actionSelectDate(_ sender: Any) {
-        let vc = PopupSelectDateViewController.init(dateSelected: self.dateFilter, viewInput: self.viewDate)
+        let vc = PopupSelectDateViewController.init(dateSelected: self.dateFilter, viewInput: self.selectDateView)
         vc.modalPresentationStyle = .overCurrentContext
         vc.onSelectDate = { [unowned self] date in
             if self.checkDate(date: date) {
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
     //update view sau khi chọn time
     func updateDate() {
         let strDate = self.dateFormatter.string(from: self.dateFilter)
-        self.lbDate.text = strDate
+        self.dateLabel.text = strDate
     }
     
     //get data

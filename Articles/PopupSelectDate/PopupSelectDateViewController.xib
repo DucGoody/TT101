@@ -9,8 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopupSelectDateViewController" customModule="Articles" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="1ng-bo-YjF" id="7xw-BU-YfE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewControl" destination="1ng-bo-YjF" id="5Yk-Xf-2zh"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

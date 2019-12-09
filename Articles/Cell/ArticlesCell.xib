@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,19 +26,6 @@
                                     <constraint firstAttribute="width" secondItem="90y-du-e16" secondAttribute="height" multiplier="1:1" id="Yt7-Fd-LVW"/>
                                 </constraints>
                             </imageView>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tSV-FM-03u">
-                                <rect key="frame" x="8" y="8" width="50" height="50"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="rYF-Gd-SQ3">
-                                        <rect key="frame" x="15" y="15" width="20" height="20"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="rYF-Gd-SQ3" firstAttribute="centerX" secondItem="tSV-FM-03u" secondAttribute="centerX" id="CbR-xG-Grq"/>
-                                    <constraint firstItem="rYF-Gd-SQ3" firstAttribute="centerY" secondItem="tSV-FM-03u" secondAttribute="centerY" id="Wgv-ze-Hwb"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FmH-za-tAq">
                                 <rect key="frame" x="66" y="8" width="212" height="70.5"/>
                                 <subviews>
@@ -82,12 +69,8 @@
                             <constraint firstItem="FmH-za-tAq" firstAttribute="leading" secondItem="90y-du-e16" secondAttribute="trailing" constant="8" id="173-0h-F3W"/>
                             <constraint firstAttribute="trailing" secondItem="FmH-za-tAq" secondAttribute="trailing" constant="10" id="2ld-KL-6ay"/>
                             <constraint firstItem="FmH-za-tAq" firstAttribute="top" secondItem="jwa-fg-hCS" secondAttribute="top" constant="8" id="B8a-RM-aOM"/>
-                            <constraint firstItem="tSV-FM-03u" firstAttribute="width" secondItem="90y-du-e16" secondAttribute="width" id="IZq-xC-rmK"/>
-                            <constraint firstItem="tSV-FM-03u" firstAttribute="centerX" secondItem="90y-du-e16" secondAttribute="centerX" id="VGd-vD-JQk"/>
                             <constraint firstAttribute="bottom" secondItem="FmH-za-tAq" secondAttribute="bottom" constant="8" id="VW5-xf-3H7"/>
-                            <constraint firstItem="tSV-FM-03u" firstAttribute="centerY" secondItem="90y-du-e16" secondAttribute="centerY" id="g6s-av-LQo"/>
                             <constraint firstItem="90y-du-e16" firstAttribute="top" secondItem="FmH-za-tAq" secondAttribute="top" id="grX-Qt-9Cg"/>
-                            <constraint firstItem="tSV-FM-03u" firstAttribute="height" secondItem="90y-du-e16" secondAttribute="height" id="j5A-9j-Pel"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -102,13 +85,11 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="indicator" destination="rYF-Gd-SQ3" id="uuY-oc-8LP"/>
-                <outlet property="ivArticle" destination="90y-du-e16" id="fqk-H3-0Np"/>
-                <outlet property="lbDate" destination="htw-t4-q4N" id="ku7-6c-pxC"/>
-                <outlet property="lbDescription" destination="2Om-Fj-TjV" id="hOd-nn-JWJ"/>
-                <outlet property="lbName" destination="crf-6o-IG9" id="MpW-VB-ReG"/>
-                <outlet property="viewLoad" destination="tSV-FM-03u" id="QQR-kh-flK"/>
-                <outlet property="viewParent" destination="jwa-fg-hCS" id="Ufc-Rt-7l1"/>
+                <outlet property="articleImageView" destination="90y-du-e16" id="O1J-54-E1j"/>
+                <outlet property="dateLabel" destination="htw-t4-q4N" id="jyr-EH-bJX"/>
+                <outlet property="descriptionLabel" destination="2Om-Fj-TjV" id="q4Z-so-EKQ"/>
+                <outlet property="nameLabel" destination="crf-6o-IG9" id="DLM-rE-tsy"/>
+                <outlet property="parentView" destination="jwa-fg-hCS" id="VBr-Td-wey"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="174.44196428571428"/>
         </tableViewCell>

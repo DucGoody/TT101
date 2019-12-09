@@ -1,8 +1,8 @@
 //
-//  SearchVC.swift
+//  SearchViewController.swift
 //  Articles
 //
-//  Created by HoangVanDuc on 11/27/19.
+//  Created by HoangVanDuc on 12/8/19.
 //  Copyright © 2019 HoangVanDuc. All rights reserved.
 //
 
@@ -11,7 +11,8 @@ import RxCocoa
 import RxSwift
 import RxDataSources
 
-class SearchVC: UIViewController {
+class SearchViewController: UIViewController {
+    
     @IBOutlet weak var cstHeightStatusView: NSLayoutConstraint!
     @IBOutlet weak var viewContentSearch: UIView!
     @IBOutlet weak var viewSearch: UIView!
@@ -22,15 +23,15 @@ class SearchVC: UIViewController {
     @IBOutlet weak var viewLoad: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    let disposeBag = DisposeBag()
-    let articlesCell: String = "ArticlesCell"
-    let loadMoreCell: String = "LoadMoreCell"
-    var datas: [DocsEntity] = []
-    let refreshControl = UIRefreshControl()
-    var isShowLoadding: Bool = true
-    var timer: Timer?
-    var viewModel: ArticlesViewModel!
-    var paramSearch = ParamSearchArticles()
+    private let disposeBag = DisposeBag()
+    private let articlesCell: String = "ArticlesCell"
+    private let loadMoreCell: String = "LoadMoreCell"
+    private var datas: [DocsEntity] = []
+    private let refreshControl = UIRefreshControl()
+    private var isShowLoadding: Bool = true
+    private var timer: Timer?
+    private var viewModel: ArticlesViewModel!
+    private var paramSearch = ParamSearchArticles()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,15 +62,15 @@ class SearchVC: UIViewController {
         self.btnCancel.rx.tap.asDriver()
             .throttle(.milliseconds(2000))
             .drive(onNext: { (_) in
-                self.dismiss(animated: false, completion: nil)
+                self.navigationController?.popViewController(animated: false)
             }).disposed(by: disposeBag)
         
         //action show keybroad
         self.btnInput.rx.tap.asDriver()
-        .throttle(.milliseconds(2000))
-        .drive(onNext: { (_) in
-            self.tfInput.becomeFirstResponder()
-        }).disposed(by: disposeBag)
+            .throttle(.milliseconds(2000))
+            .drive(onNext: { (_) in
+                self.tfInput.becomeFirstResponder()
+            }).disposed(by: disposeBag)
         
         self.initTableView()
         self.initTextFeild()
@@ -130,7 +131,7 @@ class SearchVC: UIViewController {
     
     // bin data to tableview
     func binData() {
-        self.viewModel.searchResult2.asObservable().bind(to: self.tableView.rx.items(dataSource: self.dataSource())).disposed(by: disposeBag)
+        self.viewModel.searchArticleResult.asObservable().bind(to: self.tableView.rx.items(dataSource: self.dataSource())).disposed(by: disposeBag)
         self.viewModel.onLoadSucces = {
             self.refreshControl.endRefreshing()
             self.isShowLoadding = true
@@ -142,8 +143,8 @@ class SearchVC: UIViewController {
     func selectItem() {
         Observable
             .zip(self.tableView.rx.itemSelected, tableView.rx.modelSelected(DocsEntity.self))
-        .bind { [unowned self] indexPath, model in
-            self.showDetail(item: model)
+            .bind { [unowned self] indexPath, model in
+                self.showDetail(item: model)
         }
         .disposed(by: disposeBag)
     }
@@ -168,7 +169,7 @@ class SearchVC: UIViewController {
     
     // go to Detail Article
     func showDetail(item: DocsEntity) {
-        let vc = ArticlesDetailVC()
+        let vc = ArticleDetailViewController()
         if let url = URL.init(string: item.webUrl) {
             vc.url = url
             self.navigationController?.pushViewController(vc, animated: true)
@@ -181,9 +182,19 @@ class SearchVC: UIViewController {
         view.layer.shadowOffset = CGSize.zero
         view.layer.shadowRadius = 6
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 }
 
-extension SearchVC : UITableViewDelegate {
+extension SearchViewController : UITableViewDelegate {
     // action load more
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let arrCellName = NSStringFromClass(cell.classForCoder).components(separatedBy: ".")
@@ -195,7 +206,7 @@ extension SearchVC : UITableViewDelegate {
     }
 }
 
-extension SearchVC {
+extension SearchViewController {
     //init data source
     func dataSource() -> RxTableViewSectionedReloadDataSource<DocsSection> {
         return RxTableViewSectionedReloadDataSource<DocsSection>(

@@ -19,7 +19,7 @@ class ArticlesCell: UITableViewCell {
     @IBOutlet weak var viewLoad: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    let dis = DisposeBag()
+    private let dis = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -1,26 +1,22 @@
 //
-//  ArticlesDetailVC.swift
+//  ArticleDetailViewController.swift
 //  Articles
 //
-//  Created by HoangVanDuc on 11/27/19.
+//  Created by HoangVanDuc on 12/9/19.
 //  Copyright © 2019 HoangVanDuc. All rights reserved.
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
 import WebKit
 import SnapKit
 
-class ArticlesDetailVC: UIViewController {
+class ArticleDetailViewController: UIViewController {
     var url: URL!
-    var webview: WKWebView!
-    let disposeBag = DisposeBag()
+    private var webview: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = ""
-        
+
         webview = WKWebView()
         self.view.addSubview(webview)
         
@@ -34,9 +30,6 @@ class ArticlesDetailVC: UIViewController {
         
         let request = URLRequest.init(url: url)
         webview.load(request)
-        
-        webview.rx.deallocating.debug("decidePolicyNavigationResponse").subscribe(onNext: { (_) in
-            
-        }).disposed(by: disposeBag)
     }
+
 }

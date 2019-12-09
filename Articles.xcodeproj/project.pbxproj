@@ -16,8 +16,6 @@
 		0453FD28238D1EE9008DAA08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0453FD26238D1EE9008DAA08 /* LaunchScreen.storyboard */; };
 		0453FD33238D1EE9008DAA08 /* ArticlesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD32238D1EE9008DAA08 /* ArticlesTests.swift */; };
 		0453FD3E238D1EE9008DAA08 /* ArticlesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD3D238D1EE9008DAA08 /* ArticlesUITests.swift */; };
-		0453FD4D238D3410008DAA08 /* PopupSelectDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD4B238D3410008DAA08 /* PopupSelectDateVC.swift */; };
-		0453FD4E238D3410008DAA08 /* PopupSelectDateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0453FD4C238D3410008DAA08 /* PopupSelectDateVC.xib */; };
 		0453FD53238E25B2008DAA08 /* ResponseGetArticleLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD52238E25B2008DAA08 /* ResponseGetArticleLatest.swift */; };
 		0453FD55238E273D008DAA08 /* DocsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD54238E273D008DAA08 /* DocsEntity.swift */; };
 		0453FD57238E2974008DAA08 /* DataTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD56238E2974008DAA08 /* DataTransform.swift */; };
@@ -25,12 +23,13 @@
 		0453FD5D238E2F49008DAA08 /* ArticlesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD5B238E2F49008DAA08 /* ArticlesCell.swift */; };
 		0453FD5E238E2F49008DAA08 /* ArticlesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0453FD5C238E2F49008DAA08 /* ArticlesCell.xib */; };
 		0453FD60238E3855008DAA08 /* ServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD5F238E3855008DAA08 /* ServiceController.swift */; };
-		0453FD63238E6EA7008DAA08 /* ArticlesDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453FD61238E6EA7008DAA08 /* ArticlesDetailVC.swift */; };
-		0453FD64238E6EA8008DAA08 /* ArticlesDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0453FD62238E6EA7008DAA08 /* ArticlesDetailVC.xib */; };
-		0478CDBE238E84CC0082A347 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478CDBC238E84CC0082A347 /* SearchVC.swift */; };
-		0478CDBF238E84CC0082A347 /* SearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0478CDBD238E84CC0082A347 /* SearchVC.xib */; };
 		0478CDC3238E9E9D0082A347 /* LoadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478CDC1238E9E9D0082A347 /* LoadMoreCell.swift */; };
 		0478CDC4238E9E9D0082A347 /* LoadMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0478CDC2238E9E9D0082A347 /* LoadMoreCell.xib */; };
+		04B8AF99239DE68900B6F657 /* ArticleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B8AF97239DE68900B6F657 /* ArticleDetailViewController.swift */; };
+		04B972F4239C9F7300E26AD6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B972F2239C9F7300E26AD6 /* SearchViewController.swift */; };
+		04B972F5239C9F7300E26AD6 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B972F3239C9F7300E26AD6 /* SearchViewController.xib */; };
+		04B972F9239CA0A200E26AD6 /* PopupSelectDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B972F7239CA0A200E26AD6 /* PopupSelectDateViewController.swift */; };
+		04B972FA239CA0A200E26AD6 /* PopupSelectDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B972F8239CA0A200E26AD6 /* PopupSelectDateViewController.xib */; };
 		0DF1E63A9384BD45F61EBD3D /* Pods_ArticlesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E51002081A52C8D42C01118 /* Pods_ArticlesTests.framework */; };
 		A7FE5AF6F7B56C838D368822 /* Pods_Articles_ArticlesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B195F95C8229A41110418 /* Pods_Articles_ArticlesUITests.framework */; };
 		EC0EFA9C515C3CEBC8837105 /* Pods_Articles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EEF86D9F913CE6861955743 /* Pods_Articles.framework */; };
@@ -69,8 +68,6 @@
 		0453FD39238D1EE9008DAA08 /* ArticlesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArticlesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0453FD3D238D1EE9008DAA08 /* ArticlesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesUITests.swift; sourceTree = "<group>"; };
 		0453FD3F238D1EE9008DAA08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0453FD4B238D3410008DAA08 /* PopupSelectDateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupSelectDateVC.swift; sourceTree = "<group>"; };
-		0453FD4C238D3410008DAA08 /* PopupSelectDateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupSelectDateVC.xib; sourceTree = "<group>"; };
 		0453FD52238E25B2008DAA08 /* ResponseGetArticleLatest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseGetArticleLatest.swift; sourceTree = "<group>"; };
 		0453FD54238E273D008DAA08 /* DocsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocsEntity.swift; sourceTree = "<group>"; };
 		0453FD56238E2974008DAA08 /* DataTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransform.swift; sourceTree = "<group>"; };
@@ -78,12 +75,13 @@
 		0453FD5B238E2F49008DAA08 /* ArticlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesCell.swift; sourceTree = "<group>"; };
 		0453FD5C238E2F49008DAA08 /* ArticlesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArticlesCell.xib; sourceTree = "<group>"; };
 		0453FD5F238E3855008DAA08 /* ServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceController.swift; sourceTree = "<group>"; };
-		0453FD61238E6EA7008DAA08 /* ArticlesDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesDetailVC.swift; sourceTree = "<group>"; };
-		0453FD62238E6EA7008DAA08 /* ArticlesDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArticlesDetailVC.xib; sourceTree = "<group>"; };
-		0478CDBC238E84CC0082A347 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		0478CDBD238E84CC0082A347 /* SearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchVC.xib; sourceTree = "<group>"; };
 		0478CDC1238E9E9D0082A347 /* LoadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreCell.swift; sourceTree = "<group>"; };
 		0478CDC2238E9E9D0082A347 /* LoadMoreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadMoreCell.xib; sourceTree = "<group>"; };
+		04B8AF97239DE68900B6F657 /* ArticleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewController.swift; sourceTree = "<group>"; };
+		04B972F2239C9F7300E26AD6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		04B972F3239C9F7300E26AD6 /* SearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
+		04B972F7239CA0A200E26AD6 /* PopupSelectDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupSelectDateViewController.swift; sourceTree = "<group>"; };
+		04B972F8239CA0A200E26AD6 /* PopupSelectDateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupSelectDateViewController.xib; sourceTree = "<group>"; };
 		0CF7EE182BE85EF85517EF49 /* Pods-Articles-ArticlesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Articles-ArticlesUITests.release.xcconfig"; path = "Target Support Files/Pods-Articles-ArticlesUITests/Pods-Articles-ArticlesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1EEF86D9F913CE6861955743 /* Pods_Articles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Articles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E51002081A52C8D42C01118 /* Pods_ArticlesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArticlesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +146,8 @@
 		0453FD1A238D1EE6008DAA08 /* Articles */ = {
 			isa = PBXGroup;
 			children = (
+				04B8AF96239DE66600B6F657 /* Detail */,
+				04B972F6239CA08A00E26AD6 /* PopupSelectDate */,
 				0478CDBB238E84BB0082A347 /* Search */,
 				0453FD5A238E2F35008DAA08 /* Cell */,
 				0453FD51238E2554008DAA08 /* Model */,
@@ -158,11 +158,7 @@
 				0453FD24238D1EE9008DAA08 /* Assets.xcassets */,
 				0453FD26238D1EE9008DAA08 /* LaunchScreen.storyboard */,
 				0453FD29238D1EE9008DAA08 /* Info.plist */,
-				0453FD4B238D3410008DAA08 /* PopupSelectDateVC.swift */,
-				0453FD4C238D3410008DAA08 /* PopupSelectDateVC.xib */,
 				0453FD5F238E3855008DAA08 /* ServiceController.swift */,
-				0453FD61238E6EA7008DAA08 /* ArticlesDetailVC.swift */,
-				0453FD62238E6EA7008DAA08 /* ArticlesDetailVC.xib */,
 				043A2EC423963C360083315A /* ArticlesViewModel.swift */,
 			);
 			path = Articles;
@@ -210,8 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				0478CDC0238E9E860082A347 /* Cell */,
-				0478CDBC238E84CC0082A347 /* SearchVC.swift */,
-				0478CDBD238E84CC0082A347 /* SearchVC.xib */,
+				04B972F2239C9F7300E26AD6 /* SearchViewController.swift */,
+				04B972F3239C9F7300E26AD6 /* SearchViewController.xib */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -223,6 +219,23 @@
 				0478CDC2238E9E9D0082A347 /* LoadMoreCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		04B8AF96239DE66600B6F657 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				04B8AF97239DE68900B6F657 /* ArticleDetailViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		04B972F6239CA08A00E26AD6 /* PopupSelectDate */ = {
+			isa = PBXGroup;
+			children = (
+				04B972F7239CA0A200E26AD6 /* PopupSelectDateViewController.swift */,
+				04B972F8239CA0A200E26AD6 /* PopupSelectDateViewController.xib */,
+			);
+			path = PopupSelectDate;
 			sourceTree = "<group>";
 		};
 		3191BEEB1CF157E4A7ECF33F /* Frameworks */ = {
@@ -358,10 +371,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0453FD28238D1EE9008DAA08 /* LaunchScreen.storyboard in Resources */,
-				0478CDBF238E84CC0082A347 /* SearchVC.xib in Resources */,
-				0453FD4E238D3410008DAA08 /* PopupSelectDateVC.xib in Resources */,
-				0453FD64238E6EA8008DAA08 /* ArticlesDetailVC.xib in Resources */,
+				04B972FA239CA0A200E26AD6 /* PopupSelectDateViewController.xib in Resources */,
 				0478CDC4238E9E9D0082A347 /* LoadMoreCell.xib in Resources */,
+				04B972F5239C9F7300E26AD6 /* SearchViewController.xib in Resources */,
 				0453FD25238D1EE9008DAA08 /* Assets.xcassets in Resources */,
 				0453FD5E238E2F49008DAA08 /* ArticlesCell.xib in Resources */,
 				0453FD23238D1EE6008DAA08 /* Main.storyboard in Resources */,
@@ -492,15 +504,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0478CDBE238E84CC0082A347 /* SearchVC.swift in Sources */,
+				04B972F4239C9F7300E26AD6 /* SearchViewController.swift in Sources */,
 				0453FD20238D1EE6008DAA08 /* ViewController.swift in Sources */,
 				0453FD59238E2A49008DAA08 /* MultimediaEntity.swift in Sources */,
 				0453FD5D238E2F49008DAA08 /* ArticlesCell.swift in Sources */,
 				0453FD57238E2974008DAA08 /* DataTransform.swift in Sources */,
-				0453FD4D238D3410008DAA08 /* PopupSelectDateVC.swift in Sources */,
+				04B8AF99239DE68900B6F657 /* ArticleDetailViewController.swift in Sources */,
 				0453FD53238E25B2008DAA08 /* ResponseGetArticleLatest.swift in Sources */,
+				04B972F9239CA0A200E26AD6 /* PopupSelectDateViewController.swift in Sources */,
 				0453FD1C238D1EE6008DAA08 /* AppDelegate.swift in Sources */,
-				0453FD63238E6EA7008DAA08 /* ArticlesDetailVC.swift in Sources */,
 				0453FD1E238D1EE6008DAA08 /* SceneDelegate.swift in Sources */,
 				0453FD55238E273D008DAA08 /* DocsEntity.swift in Sources */,
 				0453FD60238E3855008DAA08 /* ServiceController.swift in Sources */,

@@ -14,16 +14,16 @@ class ArticlesViewModel: NSObject {
     var paramSearch = BehaviorRelay<ParamSearchArticles>(value: ParamSearchArticles())
     var paramGetAll = BehaviorRelay<Date>.init(value: Date())
     
-    var searchResult = BehaviorRelay<[DocsEntity]>(value: [])
-    var searchResult2 = BehaviorRelay<[DocsSection]>(value: [])
+    var getArticlesResult = BehaviorRelay<[DocsEntity]>(value: [])
+    var searchArticleResult = BehaviorRelay<[DocsSection]>(value: [])
     
     private var listData: [Any] = []
     private let dis = DisposeBag()
     var onLoadSucces: (() -> Void)?
     var onLoadError: (() -> Void)?
     
-    let group = DispatchGroup()
-    let queue = DispatchQueue.global(qos: .background)
+    private let group = DispatchGroup()
+    private let queue = DispatchQueue.global(qos: .background)
     
     override init() {
         super.init()
@@ -64,15 +64,15 @@ class ArticlesViewModel: NSObject {
         
         self.group.notify(queue: .main) {
             let oneSection = DocsSection(items: self.listData)
-            self.searchResult2.accept([oneSection])
+            self.searchArticleResult.accept([oneSection])
         }
     }
     
-    func getAllArticles() {
+    func getArticles() {
         self.paramGetAll.subscribe(onNext: { (date) in
             ServiceController().getLatestArticles(date: date) { (response) in
                 if let data = response {
-                    self.searchResult.accept(data.response.docs)
+                    self.getArticlesResult.accept(data.response.docs)
                     self.onLoadSucces?()
                 } else {
                     self.onLoadError?()

@@ -16,10 +16,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    var dateFilter: Date = Date()
-    let disposeBag = DisposeBag()
-    let articlesCell = "ArticlesCell"
-    var viewModel: ArticlesViewModel!
+    private var dateFilter: Date = Date()
+    private let disposeBag = DisposeBag()
+    private let articlesCell = "ArticlesCell"
+    private var viewModel: ArticlesViewModel!
     
     lazy var dateFormatter: DateFormatter = { [unowned self] in
           let formatter = DateFormatter()
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         self.configUI()
         self.updateDate()
         self.viewModel = ArticlesViewModel()
-        self.viewModel.getAllArticles()
+        self.viewModel.getArticles()
         self.getDataLatest()
     }
     
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     
     // action chọn date
     @IBAction func actionSelectDate(_ sender: Any) {
-        let vc = PopupSelectDateVC.init(dateSelected: self.dateFilter, viewInput: self.viewDate)
+        let vc = PopupSelectDateViewController.init(dateSelected: self.dateFilter, viewInput: self.viewDate)
         vc.modalPresentationStyle = .overCurrentContext
         vc.onSelectDate = { [unowned self] date in
             if self.checkDate(date: date) {
@@ -70,9 +70,8 @@ class ViewController: UIViewController {
     
     //chuyển sang màn hình tìm kiếm
     @objc func clickRightNavigation() {
-        let vc = SearchVC()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true, completion: nil)
+        let vc = SearchViewController()
+        self.navigationController?.pushViewController(vc, animated: false)
     }
     
     //update view sau khi chọn time
@@ -84,7 +83,7 @@ class ViewController: UIViewController {
     //get data
     func getDataLatest() {
         Observable.of(dateFilter).bind(to: viewModel.paramGetAll).disposed(by: disposeBag)
-        viewModel.searchResult.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: articlesCell, cellType: ArticlesCell.self)) { index, entity, cell in
+        viewModel.getArticlesResult.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: articlesCell, cellType: ArticlesCell.self)) { index, entity, cell in
             cell.binData(docs: entity)
             self.indicator.isHidden = true
         }.disposed(by: disposeBag)
@@ -104,7 +103,7 @@ class ViewController: UIViewController {
     
     //chuyển sang màn hình chi tiết
     func showDetail(item: DocsEntity) {
-        let vc = ArticlesDetailVC()
+        let vc = ArticleDetailViewController()
         if let url = URL.init(string: item.webUrl) {
             vc.url = url
             self.navigationController?.pushViewController(vc, animated: true)

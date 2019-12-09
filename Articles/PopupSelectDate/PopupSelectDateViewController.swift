@@ -15,10 +15,10 @@ import MonthYearPicker
 class PopupSelectDateViewController: UIViewController {
 
     //control
-    @IBOutlet weak var viewControl: UIControl!
-    private var viewContentDate: UIView!
+    @IBOutlet weak var backgroundView: UIControl!
+    private var dateContentView: UIView!
     private var datePickerView: UIDatePicker!
-    private var btnDoneSelect: UIButton!
+    private var doneButton: UIButton!
     private var picker: MonthYearPickerView!
     
     private let disposeBag = DisposeBag()
@@ -44,47 +44,47 @@ class PopupSelectDateViewController: UIViewController {
     func initUI() {
         //viewcontentdate
         let originY = self.viewInput.frame.origin.y + self.viewInput.frame.size.height
-        self.viewContentDate = UIView()
-        self.viewContentDate.backgroundColor = .white
-        self.viewContentDate.layer.cornerRadius = 5
-        self.viewControl.addSubview(self.viewContentDate)
-        self.viewContentDate.snp.makeConstraints { (view) in
+        self.dateContentView = UIView()
+        self.dateContentView.backgroundColor = .white
+        self.dateContentView.layer.cornerRadius = 5
+        self.backgroundView.addSubview(self.dateContentView)
+        self.dateContentView.snp.makeConstraints { (view) in
             view.height.equalTo(200)
             view.left.equalTo(self.view).inset(16)
             view.right.equalTo(self.view).inset(16)
             view.top.equalTo(self.view).inset(originY)
         }
-        self.addShadow(view: self.viewContentDate)
+        self.addShadow(view: self.dateContentView)
         
         //button done
-        self.btnDoneSelect = UIButton()
-        self.btnDoneSelect.setTitle("Xong", for: .normal)
-        self.btnDoneSelect.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        self.btnDoneSelect.setTitleColor(.white, for: .normal)
-        self.btnDoneSelect.layer.cornerRadius = 5
-        self.btnDoneSelect.backgroundColor = UIColor.link
+        self.doneButton = UIButton()
+        self.doneButton.setTitle("Xong", for: .normal)
+        self.doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        self.doneButton.setTitleColor(.white, for: .normal)
+        self.doneButton.layer.cornerRadius = 5
+        self.doneButton.backgroundColor = UIColor.link
         
-        self.btnDoneSelect.rx.tap.asDriver()
+        self.doneButton.rx.tap.asDriver()
         .throttle(.milliseconds(1000))
         .drive(onNext: { (_) in
             self.actionDoneSelect()
         }).disposed(by: disposeBag)
-        self.viewContentDate.addSubview(self.btnDoneSelect)
-        self.btnDoneSelect.snp.makeConstraints { (btn) in
-            btn.bottom.equalTo(self.viewContentDate).inset(16)
-            btn.left.equalTo(self.viewContentDate).inset(16)
-            btn.right.equalTo(self.viewContentDate).inset(16)
+        self.dateContentView.addSubview(self.doneButton)
+        self.doneButton.snp.makeConstraints { (btn) in
+            btn.bottom.equalTo(self.dateContentView).inset(16)
+            btn.left.equalTo(self.dateContentView).inset(16)
+            btn.right.equalTo(self.dateContentView).inset(16)
             btn.height.equalTo(44)
         }
         
         //date picker
-        self.picker = MonthYearPickerView.init(frame: CGRect.init(x: 0, y: 0, width: self.viewContentDate.frame.size.width, height: self.viewContentDate.frame.size.height - 66))
-                self.viewContentDate.addSubview(self.picker)
+        self.picker = MonthYearPickerView.init(frame: CGRect.init(x: 0, y: 0, width: self.dateContentView.frame.size.width, height: self.dateContentView.frame.size.height - 66))
+                self.dateContentView.addSubview(self.picker)
                 self.picker.snp.makeConstraints { (picker) in
-                    picker.top.equalTo(self.viewContentDate).inset(16)
-                    picker.left.equalTo(self.viewContentDate).inset(16)
-                    picker.right.equalTo(self.viewContentDate).inset(16)
-                    picker.bottom.equalTo(self.btnDoneSelect.snp_top).inset(16)
+                    picker.top.equalTo(self.dateContentView).inset(16)
+                    picker.left.equalTo(self.dateContentView).inset(16)
+                    picker.right.equalTo(self.dateContentView).inset(16)
+                    picker.bottom.equalTo(self.doneButton.snp_top).inset(16)
                 }
         self.picker.setDate(self.dateSelected, animated: false)
     }

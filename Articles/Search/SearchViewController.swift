@@ -14,13 +14,12 @@ import RxDataSources
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var cstHeightStatusView: NSLayoutConstraint!
-    @IBOutlet weak var viewContentSearch: UIView!
-    @IBOutlet weak var viewSearch: UIView!
+    @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var btnCancel: UIButton!
-    @IBOutlet weak var tfInput: UITextField!
-    @IBOutlet weak var btnInput: UIButton!
-    @IBOutlet weak var viewLoad: UIView!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     private let disposeBag = DisposeBag()
@@ -48,28 +47,28 @@ class SearchViewController: UIViewController {
     
     //init UI
     func initUI() {
-        self.viewSearch.layer.cornerRadius = 5
-        self.viewSearch.layer.borderColor = UIColor.gray.cgColor
-        self.viewSearch.layer.borderWidth = 0.5
+        self.searchView.layer.cornerRadius = 5
+        self.searchView.layer.borderColor = UIColor.gray.cgColor
+        self.searchView.layer.borderWidth = 0.5
         
         //
-        self.viewLoad.layer.cornerRadius = 10
-        self.addShadow(view: viewLoad)
-        self.viewLoad.isHidden = true
+        self.loadingView.layer.cornerRadius = 10
+        self.addShadow(view: loadingView)
+        self.loadingView.isHidden = true
         self.indicator.startAnimating()
         
         //action cancel
-        self.btnCancel.rx.tap.asDriver()
+        self.cancelButton.rx.tap.asDriver()
             .throttle(.milliseconds(2000))
             .drive(onNext: { (_) in
                 self.navigationController?.popViewController(animated: false)
             }).disposed(by: disposeBag)
         
         //action show keybroad
-        self.btnInput.rx.tap.asDriver()
+        self.searchButton.rx.tap.asDriver()
             .throttle(.milliseconds(2000))
             .drive(onNext: { (_) in
-                self.tfInput.becomeFirstResponder()
+                self.searchTextField.becomeFirstResponder()
             }).disposed(by: disposeBag)
         
         self.initTableView()
@@ -98,15 +97,15 @@ class SearchViewController: UIViewController {
     
     // init TextField
     func initTextFeild() {
-        self.tfInput.becomeFirstResponder()
+        self.searchTextField.becomeFirstResponder()
         
-        self.tfInput.rx.controlEvent([.editingChanged])
+        self.searchTextField.rx.controlEvent([.editingChanged])
             .asObservable().subscribe(onNext: { (_) in
                 self.timer?.invalidate()
                 self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.getDataByKeyword), userInfo: nil, repeats: false)
             }).disposed(by: disposeBag)
         
-        self.tfInput.rx.controlEvent([.editingDidEndOnExit]).asObservable().subscribe(onNext: { (_) in
+        self.searchTextField.rx.controlEvent([.editingDidEndOnExit]).asObservable().subscribe(onNext: { (_) in
             self.view.endEditing(true)
         }).disposed(by: disposeBag)
     }
@@ -119,12 +118,12 @@ class SearchViewController: UIViewController {
     
     // action get data by keyword
     @objc func getDataByKeyword(_ isLoadMore: Bool = false) {
-        let text = self.tfInput.text?.trimmingCharacters(in: .whitespaces)
+        let text = self.searchTextField.text?.trimmingCharacters(in: .whitespaces)
         guard let keyword = text, !keyword.isEmpty else { return }
         if !isLoadMore { self.paramSearch.pageIndex = 0 }
         self.paramSearch.keyword = keyword
         
-        self.viewLoad.isHidden = !isShowLoadding
+        self.loadingView.isHidden = !isShowLoadding
         
         Observable.of(self.paramSearch).bind(to: self.viewModel.paramSearch).disposed(by: self.disposeBag)
     }
@@ -135,7 +134,7 @@ class SearchViewController: UIViewController {
         self.viewModel.onLoadSucces = {
             self.refreshControl.endRefreshing()
             self.isShowLoadding = true
-            self.viewLoad.isHidden = true
+            self.loadingView.isHidden = true
         }
     }
     

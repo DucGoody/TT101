@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.9.1)
   - Differentiator (4.0.1)
+  - Kingfisher (4.10.1)
   - MonthYearPicker (3.0.0)
   - ObjectMapper (3.5.1)
   - RxCocoa (5.0.0):
@@ -21,6 +22,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Kingfisher
   - MonthYearPicker
   - ObjectMapper
   - RxCocoa
@@ -34,6 +36,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Differentiator
+    - Kingfisher
     - MonthYearPicker
     - ObjectMapper
     - RxCocoa
@@ -47,6 +50,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   MonthYearPicker: 59cfa26c5bfbbc52ef147360d9846c349f578991
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
@@ -57,6 +61,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 45183de47a330fe8fd9a0d2f23f762c76794ff1f
+PODFILE CHECKSUM: c9cd3889761ae508403dd0c930ee5a707f7cefe7
 
 COCOAPODS: 1.8.3

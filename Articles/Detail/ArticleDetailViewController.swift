@@ -12,15 +12,15 @@ import SnapKit
 
 class ArticleDetailViewController: UIViewController {
     var url: URL!
-    private var webview: WKWebView!
+    private var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        webview = WKWebView()
-        self.view.addSubview(webview)
+        webView = WKWebView()
+        self.view.addSubview(webView)
         
-        webview.snp.makeConstraints { (web) in
+        webView.snp.makeConstraints { (web) in
             web.top.equalTo(self.view).inset(0)
             web.left.equalTo(self.view).inset(0)
             web.right.equalTo(self.view).inset(0)
@@ -29,7 +29,7 @@ class ArticleDetailViewController: UIViewController {
         
         
         let request = URLRequest.init(url: url)
-        webview.load(request)
+        webView.load(request)
     }
 
 }
